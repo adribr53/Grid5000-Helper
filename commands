@@ -56,4 +56,5 @@ mv f-stack.conf /etc/f-stack.conf
 cd example/
 cp -r . ../lib/
 cd /data/f-stack/lib
+make
 ./helloworld --conf /etc/f-stack.conf --proc-type=primary &
