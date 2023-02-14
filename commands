@@ -1,3 +1,7 @@
+oarsub -I -t deploy -l nodes=2,walltime=4 -p " cluster = 'gros' "
+kadeploy3 -f $OAR_NODEFILE -k -e debian11-x64-nfs # Works
+uniq $OAR_NODEFILE | taktuk -d -1 -l root -f - broadcast exec [ 'dhclient eno2' ]
+
 apt-get update
 apt-get -y install git gcc openssl libssl-dev linux-headers-$(uname -r) bc libnuma1 libnuma-dev libpcre3 libpcre3-dev zlib1g-dev
 mkdir -p /data/f-stack
@@ -32,6 +36,7 @@ apt install python-is-python3
 apt install net-tools
 ifconfig
 
+ifconfig <name_of_interface_to_bind> down
 python dpdk-devbind.py --bind=igb_uio <name_of_interface_to_bind>
 cd /data/
 export FF_PATH=/data/f-stack
@@ -51,6 +56,7 @@ make
 make install
 
 cd /data/f-stack
+# nano config.ini: route -n to get gateway ip + ifconfig for other addresses
 cp config.ini f-stack.conf
 mv f-stack.conf /etc/f-stack.conf
 cd example/
