@@ -6,6 +6,8 @@
 
 cd 
 cd tinyhttpd-lwip-dpdk/
+make 
+
 port_number=$1
 interfacenum="$(cat myinterfacenum)"
 addr="$(cat myaddr)"
