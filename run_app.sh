@@ -16,6 +16,7 @@ addr="$(cat myaddr)"
 gw="$(cat mygw)"
 mask="$(cat mymask)"
 
+echo $content_len
 echo $port_number
 echo $interfacenum
 echo $addr
