@@ -1,0 +1,10 @@
+%variables
+WRK_PROTOCOL=http
+WRK_HOST=localhost
+HTTP_PORT=8000
+FILE_PATH=
+GEN_TIME=10
+GEN_THREADS={1,2,4}
+GEN_CONCURRENT={1,8,16}
+
+%import@client wrk delay=1e
