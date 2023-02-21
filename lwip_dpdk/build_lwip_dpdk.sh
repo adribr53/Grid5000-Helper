@@ -1,10 +1,10 @@
 # PRE :
 # ssh nantes.g5k
-# Put the script in public folder
+# Put the script in /home/<user>/public/Grid5000-Helper/lwip_dpdk folder
 # oarsub -I -l nodes=2,walltime=4 -p "cluster = 'ecotype'"
 # sudo-g5k -i
-# cd /home/<user>/public
-# ./deploy_lwip_dpdk.sh
+# cd /home/<user>/public/Grid5000-Helper/lwip_dpdk
+# ./build_lwip_dpdk.sh
 
 cd
 

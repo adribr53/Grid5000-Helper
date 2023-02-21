@@ -5,7 +5,9 @@
 # First parameter is the content length of the HTTP response
 # Second parameter is the listening port number
 
-cd 
+cp main.c ~/tinyhttpd-lwip-dpdk/
+cp lwipopts.h ~/tinyhttpd-lwip-dpdk/
+cd
 cd tinyhttpd-lwip-dpdk/
 make 
 
