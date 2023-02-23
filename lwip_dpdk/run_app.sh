@@ -7,8 +7,10 @@
 
 cp main.c ~/tinyhttpd-lwip-dpdk/
 cp lwipopts.h ~/tinyhttpd-lwip-dpdk/
+cp lwipopts.h ~/tinyhttpd-lwip-dpdk/lwip/lwip-2.1.3/src/include/lwip/
 cd
 cd tinyhttpd-lwip-dpdk/
+rm app
 make 
 
 content_len=$1
