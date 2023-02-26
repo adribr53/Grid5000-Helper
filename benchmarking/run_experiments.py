@@ -7,14 +7,14 @@ import time as tm
 import argparse
 
 def compute_total_throughput(data):
-    return int(data[-1][-1]) / 1000000000 # In GB/s
+    return int(data[-1][-1]) # In bytes
 
 def compute_avg_throughput(data):
     connections = data[:-1]
     tr_values = []
     for connection in connections:
         tr_values.append(int(connection[-1]))
-    return np.mean(tr_values) / 1000000000 # In GB/s
+    return np.mean(tr_values) # In bytes
 
 def compute_avg_latency(data):
     connections = data[:-1]
@@ -34,12 +34,13 @@ if __name__ == "__main__":
     print('Server port {}'.format(args.port_server))
     print('Client IP {}'.format(args.ip_client))
 
-    frame = pd.DataFrame(columns=['pkt_length', 'n_connections', 'time', 'total_throughput', 'avg_throughput', 'avg_latency'])
+    frame = pd.DataFrame(columns=['pkt_length', 'n_connections', 'time', 'total_throughput', 'avg_throughput', 'avg_latency',
+                                  'std_total_throughput', 'std_avg_throughput', 'std_avg_latency'])
 
     n_connections_list = [4, 8, 32]  #[1, 8, 32, 64, 128]
     pkt_length_list = [1, 100, 500] #[1, 100, 500, 1000, 5000, 10000, 25000, 50000]
     n_runs = 3
-    time = 2
+    time = 2 #20
 
     for pkt_length in pkt_length_list:
         input('Please launch server with pkt_length={}'.format(pkt_length))
@@ -61,21 +62,26 @@ if __name__ == "__main__":
 
                 total_throughput = compute_total_throughput(data)
                 total_throughput_list.append(total_throughput)
-                print('TOTAL THROUGHPUT={} GB/s'.format(total_throughput))
+                # print('TOTAL THROUGHPUT={} B/s'.format(total_throughput))
 
                 avg_throughput = compute_avg_throughput(data)
                 avg_throughput_list.append(avg_throughput)
-                print('AVG THROUGHPUT={} GB/s'.format(avg_throughput))
+                # print('AVG THROUGHPUT={} B/s'.format(avg_throughput))
 
                 avg_latency = compute_avg_latency(data)
                 avg_latency_list.append(avg_latency)
-                print('AVG LATENCY={} s'.format(avg_latency))
+                # print('AVG LATENCY={} s'.format(avg_latency))
 
-                print()
+                # print()
                 tm.sleep(1)
 
-            new_frame = pd.DataFrame({'pkt_length': [pkt_length], 'n_connections': [n_connections], 'time': [time], 'total_throughput': [np.mean(total_throughput_list)], 'avg_throughput': [np.mean(avg_throughput_list)], 'avg_latency': [np.mean(avg_latency_list)]}, index=['server-linux'])
+            new_frame = pd.DataFrame({'pkt_length': [pkt_length], 'n_connections': [n_connections],
+                'time': [time], 'total_throughput': [np.mean(total_throughput_list)],
+                'avg_throughput': [np.mean(avg_throughput_list)], 'avg_latency': [np.mean(avg_latency_list)],
+                'std_total_throughput': [np.std(total_throughput_list)], 'std_avg_throughput': [np.std(avg_throughput_list)],
+                'std_avg_latency': [np.std(avg_latency_list)]},
+                index=['server-linux'])  # To replace by implementation of server
             frame = pd.concat([frame, new_frame])
             print(frame)
 
-    frame.to_csv(r"data1.csv", index=True)
+    frame.to_csv(r"data1.csv", index=True) # To replace by csv file (data1.csv or data2.csv)
